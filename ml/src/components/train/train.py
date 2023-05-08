@@ -64,7 +64,7 @@ def main():
     print(f"Training with data of shape {X_train.shape}")
 
     clf = HistGradientBoostingClassifier(
-        max_iter=args.n_estimators, learning_rate=args.learning_rate
+        max_iter=args.n_estimators, learning_rate=args.learning_rate, random_state=1301
     )
     clf.fit(X_train, y_train)
 
