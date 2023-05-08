@@ -20,6 +20,7 @@ def main():
     # Start Logging
     ### YOUR CODE HERE
     # Add mlflow logging to this script
+    mlflow.start_run()
 
     print(" ".join(f"{k}={v}" for k, v in vars(args).items()))
 
@@ -30,6 +31,8 @@ def main():
     ### YOUR CODE HERE
     # Log the number of samples as "num_samples"
     # Log the number of features as "num_features"
+    mlflow.log_metric("num_samples", credit_df.shape[0])
+    mlflow.log_metric("num_features", credit_df.shape[1] - 1)
 
     credit_train_df, credit_test_df = train_test_split(
         credit_df,
@@ -40,6 +43,9 @@ def main():
     credit_train_df.to_csv(os.path.join(args.train_data, "data.csv"), index=False)
 
     credit_test_df.to_csv(os.path.join(args.test_data, "data.csv"), index=False)
+
+    # Stop Logging
+    mlflow.end_run()
 
 
 if __name__ == "__main__":
