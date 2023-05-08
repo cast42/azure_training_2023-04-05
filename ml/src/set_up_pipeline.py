@@ -19,7 +19,7 @@ args = parser.parse_args()
 
 env = args.env
 
-assert args.environment in [
+assert args.env in [
     "dev",
     "uat",
     "prd",
