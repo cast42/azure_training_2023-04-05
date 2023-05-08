@@ -1,5 +1,6 @@
 import argparse
 from sklearn.ensemble import GradientBoostingClassifier
+from sklearn.ensemble import HistGradientBoostingClassifier
 from sklearn.metrics import classification_report
 import os
 import pandas as pd
@@ -62,8 +63,8 @@ def main():
 
     print(f"Training with data of shape {X_train.shape}")
 
-    clf = GradientBoostingClassifier(
-        n_estimators=args.n_estimators, learning_rate=args.learning_rate
+    clf = HistGradientBoostingClassifier(
+        max_iter=args.n_estimators, learning_rate=args.learning_rate, random_state=1301
     )
     clf.fit(X_train, y_train)
 
