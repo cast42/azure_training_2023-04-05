@@ -1,0 +1,39 @@
+name: Set up pipeline
+
+on:
+  workflow_dispatch:
+  push:
+    branches:
+      - main
+      - develop
+    paths:
+      - "ml/src/**"
+
+jobs:
+  set_up_pipeline:
+    runs-on: ubuntu-latest
+    # Avoid triggering if a pull_request is created
+    if: github.event_name != 'pull_request'
+    env:
+      ENV: ${{ github.ref == 'refs/heads/main' && 'prd' || (github.ref == 'refs/heads/develop' && 'uat' || 'dev') }}
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: azure login
+        uses: azure/login@v1
+        with:
+          creds: ${{secrets.AZURE_CREDENTIALS}}
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: 3.9
+      - name: Install dependencies
+        run: |
+          python -m pip install --upgrade pip
+          pip install azure-ai-ml
+      - name: Set up and run pipeline
+        run: |
+          python set_up_pipeline.py --env ${{ env.ENV }}
+        working-directory: ml/src/
