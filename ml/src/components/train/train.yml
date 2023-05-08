@@ -18,5 +18,5 @@ outputs:
     type: uri_folder
 environment: azureml:AzureML-sklearn-1.0-ubuntu20.04-py38-cpu:1
 command: >-
-  python train.py  --train_data ${{inputs.train_data}} --test_data ${{inputs.test_data}} --learning_rate ${{inputs.learning_rate}} --registered_model_name ${{inputs.registered_model_name}} --model ${{outputs.model}}
+  python train.py --train_data ${{inputs.train_data}} --test_data ${{inputs.test_data}} --learning_rate ${{inputs.learning_rate}} --registered_model_name ${{inputs.registered_model_name}}  --model ${{outputs.model}}
 
